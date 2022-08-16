@@ -15,6 +15,14 @@ app.get("/",async (req: Request,res: Response)=> {
     res.status(200).json(photos)
 })
 
+app.post("/like/:id", async (req: Request, res: Response)=> {
+    const photoid = req.params.id
+    console.log("/like/",photoid)
+    let status = await photosCollections.updateOne({_id: new ObjectId(photoid)}, { $inc: {likes:1}})
+    //let status = await photosCollections.findOneAndUpdate({"_id": new ObjectId(photoid)}, { $inc: {likes:1}})
+    res.status(201).json(status)
+});
+
 const PORT = 5001
 app.listen(PORT,()=> {
     console.log("we started on port",PORT)
