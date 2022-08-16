@@ -1,9 +1,9 @@
 import express, {Request,Response} from "express"
 import cors from "cors"
-import {MongoClient} from "mongodb"
+import {MongoClient,ObjectId} from "mongodb"
 import {uri} from "./credentials"
 const client = new MongoClient(uri)
-const db = client.db("DamianCluster")
+const db = client.db("BocaCode")
 const photosCollections = db.collection("photos")
 
 const app = express()
