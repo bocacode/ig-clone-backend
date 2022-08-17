@@ -1,19 +1,12 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { MongoClient, ObjectId } from 'mongodb';
-import { uri } from './credentials';
-const client = new MongoClient(uri);
-const db = client.db('BocaCode');
-const photosCollections = db.collection('photos');
+import { photoRouter } from './src/routers/photo-router';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', async (req: Request, res: Response) => {
-  const photos = await photosCollections.find({}).toArray();
-  res.status(200).json(photos);
-});
+app.use('/photos', photoRouter);
 
 const PORT = 5001;
 app.listen(PORT, () => {
