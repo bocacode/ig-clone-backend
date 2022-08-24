@@ -8,7 +8,4 @@ app.use(express.json());
 
 app.use('/photos', photoRouter);
 
-const PORT = 5001;
-app.listen(PORT, () => {
-  console.log('we started on port', PORT);
-});
+export default app;
