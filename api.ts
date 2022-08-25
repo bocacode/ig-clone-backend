@@ -1,14 +1,21 @@
-import express from 'express';
-import cors from 'cors';
-import { photoRouter } from './src/routers/photo-router';
+import express, {Request,Response} from "express"
+import cors from "cors"
+import {MongoClient,ObjectId} from "mongodb"
+import {uri} from "./credentials"
+const client = new MongoClient(uri)
+const db = client.db("BocaCode")
+const photosCollections = db.collection("photos")
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+const app = express()
+app.use(cors())
+app.use(express.json())
 
-app.use('/photos', photoRouter);
+app.get("/",async (req: Request,res: Response)=> {
+    const photos = await photosCollections.find({}).toArray()
+    res.status(200).json(photos)
+})
 
-const PORT = 5001;
-app.listen(PORT, () => {
-  console.log('we started on port', PORT);
-});
+const PORT = 5001
+app.listen(PORT,()=> {
+    console.log("we started on port",PORT)
+})
